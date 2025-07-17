@@ -1,0 +1,75 @@
+body {
+    background-color: #1a1a1a;
+    position: relative; 
+    
+    color: #e0e0e0;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    margin: 0;
+}
+
+body::before {
+    content: '';
+    
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    
+    background-image: url('/img/background.png');
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center center;
+    background-attachment: fixed;
+
+    opacity: 0.3; 
+
+    z-index: -1;
+}
+
+main {
+    text-align: center;
+}
+
+.timers {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 40px;
+    margin: 30px 0;
+}
+
+.timer-box h2 {
+    font-size: 1.2em;
+    color: #aaa;
+}
+
+.timer-box p {
+    font-size: 2.5em;
+    font-weight: bold;
+    margin: 5px 0;
+}
+
+button {
+    padding: 15px 30px;
+    font-size: 1.2em;
+    cursor: pointer;
+    border: 2px solid #555;
+    background-color: #333;
+    color: #e0e0e0;
+    margin: 0 10px;
+    transition: background-color 0.2s;
+}
+
+button:hover {
+    background-color: #444;
+}
+
+button.raid-active {
+    background-color: #8a0e0e;
+    border-color: #b82c2c;
+}
