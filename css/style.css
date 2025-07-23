@@ -73,3 +73,66 @@ button.raid-active {
     background-color: #8a0e0e;
     border-color: #b82c2c;
 }
+
+/* Estilos para os novos elementos */
+
+.hidden {
+    display: none;
+}
+
+#log-raid-container, .history-container {
+    margin-top: 25px;
+    padding: 15px;
+    border: 1px solid #444;
+    border-radius: 5px;
+    width: 100%;
+    max-width: 400px; /* Impede que fique demasiado largo em ecrãs grandes */
+}
+
+.form-line {
+    margin-bottom: 10px;
+}
+
+#log-raid-container textarea, #log-raid-container select {
+    width: 100%;
+    padding: 5px;
+    background-color: #333;
+    color: #e0e0e0;
+    border: 1px solid #555;
+}
+
+#save-raid-btn {
+    width: 100%;
+    padding: 10px;
+    font-size: 1em;
+    margin: auto;
+}
+
+
+#history-raids-list {
+    list-style: none;
+    padding: 0;
+}
+
+#history-raids-list li {
+    padding: 10px;
+    margin-bottom: 10px;
+    border-left-width: 5px;
+    border-left-style: solid;
+}
+
+#history-raids-list li p {
+    margin: 5px 0 0 0;
+    font-size: 0.9em;
+    color: #ccc;
+}
+
+li.survived {
+    background-color: rgba(40, 167, 69, 0.1);
+    border-left-color: #28a745;
+}
+
+li.dead {
+    background-color: rgba(220, 53, 69, 0.1);
+    border-left-color: #dc3545;
+}

@@ -1,16 +1,19 @@
 document.addEventListener('DOMContentLoaded', e => {
     // Variables
     let isRaidActive = false;
+    let raidInterval = 0; // raid timer
     let totalGameTime = 0; 
+    let waitingInterval = 0; // waiting timer
     let totalWaitingTime = 0;
-    let raidInterval = 0;
-    let waitingInterval = 0;
+    let raids = []; // raid storage
+    let lastRaidDuration = 0; 
 
     // Elements
     startButton = document.getElementById('start-button');
     resetButton = document.getElementById('reset-button');
     waitingTime = document.getElementById('waiting-time');
     gameTime = document.getElementById('game-time');
+    logRaidContainer = document.getElementById('log-raid-container');
     
 
     function formatTime(totalSeconds){
@@ -30,6 +33,7 @@ document.addEventListener('DOMContentLoaded', e => {
     function startRaid() {
         if (isRaidActive === false){
             isRaidActive = true;
+            logRaidContainer.classList.add("hidden");
 
             //Stop WaitingTimer
             if (totalWaitingTime > 0){                
@@ -52,6 +56,9 @@ document.addEventListener('DOMContentLoaded', e => {
             startButton.textContent = 'Start Raid';
             startButton.classList.remove("raid-active");
 
+            lastRaidDuration = totalGameTime; 
+            logRaidContainer.classList.remove("hidden");
+
             // Stop GameTimer
             clearInterval(raidInterval);
             waitingInterval = setInterval(
@@ -66,6 +73,7 @@ document.addEventListener('DOMContentLoaded', e => {
         isRaidActive = false;
         startButton.textContent = 'Start Raid';
         startButton.classList.remove("raid-active");
+        logRaidContainer.classList.add("hidden");
 
         totalGameTime = 0;
         totalWaitingTime = 0;

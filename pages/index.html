@@ -26,6 +26,38 @@
             <button id="start-button" onclick="">Start Raid</button>
             <button id="reset-button">Reset</button>
         </div>
+
+        <div id="log-raid-container" class="hidden">
+            <h3>Last Raid Details</h3>
+            <div class="form-line">
+                <input type="checkbox" id="raid-survival">
+                <label for="raid-survival">Survived?</label>
+            </div>
+            <div class="form-line">
+                <label for="raid-map">Map:</label>
+                <select id="raid-map">
+                    <option value="Customs">Customs</option>
+                    <option value="Factory">Factory</option>
+                    <option value="Interchange">Interchange</option>
+                    <option value="Lighthouse">Lighthouse</option>
+                    <option value="Reserve">Reserve</option>
+                    <option value="Shoreline">Shoreline</option>
+                    <option value="Streets">Streets of Tarkov</option>
+                    <option value="Woods">Woods</option>
+                </select>
+            </div>
+            <div class="form-line">
+                <button id="save-raid-btn">Save Raid</button>
+            </div>
+        </div>
+
+        <div class="history-container">
+            <h3>History of Raids</h3>
+            <ul id="history-raids-list">
+                </ul>
+        </div>
+
+
     </main>
 
     <script src="/javascript/script.js"></script>
