@@ -17,6 +17,7 @@ document.addEventListener('DOMContentLoaded', e => {
     let resetButton = document.getElementById('reset-button');
     let logRaidContainer = document.getElementById('log-raid-container');
     let saveRaid = document.getElementById('save-raid-btn');
+    let resetHistory = document.querySelector('.reset-history-button');
 
     // Elements
     let gameTimeElement = document.getElementById('game-time');
@@ -39,6 +40,17 @@ document.addEventListener('DOMContentLoaded', e => {
 
         return `${formattedHours}:${formattedMinutes}:${formattedSeconds}`;
 
+    }
+
+    function startWaitingTimer(){
+        waitingTimeCounter = 0;
+        waitingInterval = setInterval(
+                function(){
+                    waitingTimeCounter += 1;
+                    totalWaitingTime += 1;
+                    waitingTimeElement.textContent = formatTime(waitingTimeCounter);
+                    totalWaitingTimeElement.textContent = formatTime(totalWaitingTime);
+                },1000);
     }
 
     // Event Listeners
@@ -141,15 +153,14 @@ document.addEventListener('DOMContentLoaded', e => {
         }
     }
 
-    function startWaitingTimer(){
-        waitingTimeCounter = 0;
-        waitingInterval = setInterval(
-                function(){
-                    waitingTimeCounter += 1;
-                    totalWaitingTime += 1;
-                    waitingTimeElement.textContent = formatTime(waitingTimeCounter);
-                    totalWaitingTimeElement.textContent = formatTime(totalWaitingTime);
-                },1000);
+    function resetHistoryList() {
+        for (let i = 0; i< raids.length; i++) {
+            const raidItem = document.querySelector(`#history-raids-list li:nth-child(${i + 1})`);
+            if (raidItem) {
+                raidItem.remove(); // Remove each raid item from the history list
+            }
+        }
+        raids = []; // Reset raids array
     }
 
     startButton.addEventListener("click", startRaid);
@@ -157,5 +168,7 @@ document.addEventListener('DOMContentLoaded', e => {
     resetButton.addEventListener("click", resetRaid);
 
     saveRaid.addEventListener("click", saveRaidDetails);
+
+    resetHistory.addEventListener("click", resetHistoryList);
 
 });
