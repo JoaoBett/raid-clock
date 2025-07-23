@@ -59,7 +59,9 @@ document.addEventListener('DOMContentLoaded', e => {
             raidInterval = setInterval(
                 function() {
                     gameTimeCounter += 1;
+                    totalGameTime += 1
                     gameTimeElement.textContent = formatTime(gameTimeCounter);
+                    totalGameTimeElement.textContent = formatTime(totalGameTime);
                 }
                 ,1000);
             
@@ -136,7 +138,6 @@ document.addEventListener('DOMContentLoaded', e => {
             raidItem.className = raid.survival ? 'survived' : 'dead';
             raidItem.textContent = `Raid ${i + 1}: ${raid.survival ? 'Survived' : 'Died'}, Duration: ${formatTime(raid.raidDuration)}, Map: ${raid.map}`;
             document.getElementById('history-raids-list').appendChild(raidItem);
-
         }
     }
 
@@ -147,6 +148,7 @@ document.addEventListener('DOMContentLoaded', e => {
                     waitingTimeCounter += 1;
                     totalWaitingTime += 1;
                     waitingTimeElement.textContent = formatTime(waitingTimeCounter);
+                    totalWaitingTimeElement.textContent = formatTime(totalWaitingTime);
                 },1000);
     }
 
