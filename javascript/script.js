@@ -1,25 +1,37 @@
 document.addEventListener('DOMContentLoaded', e => {
     // Variables
     let isRaidActive = false;
+
     let raidInterval = 0; // raid timer
-    let totalGameTime = 0; 
     let waitingInterval = 0; // waiting timer
+    let gameTimeCounter = 0; 
+
     let totalWaitingTime = 0;
+    let totalGameTime = 0; 
+
     let raids = []; // raid storage
     let lastRaidDuration = 0; 
 
+    // Buttons and Elements
+    let startButton = document.getElementById('start-button');
+    let resetButton = document.getElementById('reset-button');
+    let logRaidContainer = document.getElementById('log-raid-container');
+    let saveRaid = document.getElementById('save-raid-btn');
+
     // Elements
-    startButton = document.getElementById('start-button');
-    resetButton = document.getElementById('reset-button');
-    waitingTime = document.getElementById('waiting-time');
-    gameTime = document.getElementById('game-time');
-    logRaidContainer = document.getElementById('log-raid-container');
+    let gameTimeElement = document.getElementById('game-time');
+    let waitingTimeElement = document.getElementById('waiting-time');
+    let historyListElement = document.getElementById('history-raids-list');
     
+    
+    let totalGameTimeElement = document.getElementById('total-game-time');
+    let totalWaitingTimeElement = document.getElementById('total-waiting-time');
+
 
     function formatTime(totalSeconds){
         const hours = Math.floor(totalSeconds / 3600);             
         const minutes = Math.floor((totalSeconds % 3600) / 60);   
-        const seconds = totalSeconds % 60;
+        const seconds = Math.floor(totalSeconds % 60);
 
         const formattedHours = String(hours).padStart(2, '0');
         const formattedMinutes = String(minutes).padStart(2, '0');
@@ -33,39 +45,42 @@ document.addEventListener('DOMContentLoaded', e => {
     function startRaid() {
         if (isRaidActive === false){
             isRaidActive = true;
-            logRaidContainer.classList.add("hidden");
+            gameTimeElement.textContent = '00:00:00';
+            waitingTimeElement.textContent = '00:00:00';
 
-            //Stop WaitingTimer
-            if (totalWaitingTime > 0){                
-                clearInterval(waitingInterval);
-            }
+
+            gameTimeCounter = 0;
+
+            clearInterval(waitingInterval);
 
             startButton.textContent = 'End Raid';
             startButton.classList.add("raid-active");
             
             raidInterval = setInterval(
                 function() {
-                    totalGameTime += 1;
-                    gameTime.textContent = formatTime(totalGameTime);
+                    gameTimeCounter += 1;
+                    gameTimeElement.textContent = formatTime(gameTimeCounter);
                 }
                 ,1000);
-
+            
+            
         }
         else{
             isRaidActive = false;
             startButton.textContent = 'Start Raid';
             startButton.classList.remove("raid-active");
 
-            lastRaidDuration = totalGameTime; 
+            waitingTimeElement.textContent = '00:00:00';
+
+            clearInterval(raidInterval);
+            
+            lastRaidDuration = gameTimeCounter; 
+            //totalGameTime += lastRaidDuration;
+
             logRaidContainer.classList.remove("hidden");
 
-            // Stop GameTimer
-            clearInterval(raidInterval);
-            waitingInterval = setInterval(
-                function(){
-                    totalWaitingTime += 1;
-                    waitingTime.textContent = formatTime(totalWaitingTime);
-                },1000);
+            startWaitingTimer();
+            
         }
     }
 
@@ -75,27 +90,70 @@ document.addEventListener('DOMContentLoaded', e => {
         startButton.classList.remove("raid-active");
         logRaidContainer.classList.add("hidden");
 
+        gameTimeCounter = 0;
+        waitingTimeCounter = 0;
         totalGameTime = 0;
         totalWaitingTime = 0;
-        gameTime.textContent = '00:00:00';
-        waitingTime.textContent = '00:00:00';
+        raids = [];
 
-        // Stop both timers
-        if (raidInterval) {
-            clearInterval(raidInterval);
+        gameTimeElement.textContent = '00:00:00';
+        waitingTimeElement.textContent = '00:00:00';
+        if (totalGameTimeElement){ totalGameTimeElement.textContent = '00:00:00';}
+        if (totalWaitingTimeElement) totalWaitingTimeElement.textContent = '00:00:00';
+
+        clearInterval(raidInterval);
+        clearInterval(waitingInterval);
+
+        historyRaids(raids);
+    }
+
+    function saveRaidDetails(){
+        let raidSurvivalElement = document.getElementById('raid-survival');
+        let raidMapElement = document.getElementById('raid-map');
+
+        const raidDetails ={
+            survival: raidSurvivalElement.checked,
+            raidDuration: lastRaidDuration,
+            map: raidMapElement.value,
         }
 
-        if (waitingInterval) {
-            clearInterval(waitingInterval);
+        raids.push(raidDetails);
+
+        logRaidContainer.classList.add("hidden");
+
+        raidSurvivalElement.checked = false;
+        raidMapElement.value = "Customs"; 
+
+        historyRaids(raids);
+    }
+
+    function historyRaids(raids){
+        historyListElement.innerHTML = ''; // Clear previous history
+
+        for (let i = 0; i < raids.length; i++) {
+            const raid = raids[i];
+            const raidItem = document.createElement('li');
+            raidItem.className = raid.survival ? 'survived' : 'dead';
+            raidItem.textContent = `Raid ${i + 1}: ${raid.survival ? 'Survived' : 'Died'}, Duration: ${formatTime(raid.raidDuration)}, Map: ${raid.map}`;
+            document.getElementById('history-raids-list').appendChild(raidItem);
+
         }
     }
 
-    startButton.addEventListener("click", function(e){
-        startRaid();
-    });
+    function startWaitingTimer(){
+        waitingTimeCounter = 0;
+        waitingInterval = setInterval(
+                function(){
+                    waitingTimeCounter += 1;
+                    totalWaitingTime += 1;
+                    waitingTimeElement.textContent = formatTime(waitingTimeCounter);
+                },1000);
+    }
 
-    resetButton.addEventListener("click", function(e){
-        resetRaid();
-    });
+    startButton.addEventListener("click", startRaid);
+
+    resetButton.addEventListener("click", resetRaid);
+
+    saveRaid.addEventListener("click", saveRaidDetails);
 
 });
