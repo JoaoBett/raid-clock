@@ -4,13 +4,21 @@ document.addEventListener('DOMContentLoaded', e => {
 
     let raidInterval = 0; // raid timer
     let waitingInterval = 0; // waiting timer
-    let gameTimeCounter = 0; 
+    let gameTimeCounter = 0; //game timer
 
     let totalWaitingTime = 0;
     let totalGameTime = 0; 
 
     let raids = []; // raid storage
     let lastRaidDuration = 0; 
+
+    // Statistics
+    let survivedRaids = 0;
+    let survivalRate = 0;
+    let totalRaidDuration = 0;
+    let totalSessionTime = 0;
+    let efficiency = 0;
+    let averageTime = 0;
 
     // Buttons and Elements
     let startButton = document.getElementById('start-button');
@@ -28,18 +36,23 @@ document.addEventListener('DOMContentLoaded', e => {
     let totalGameTimeElement = document.getElementById('total-game-time');
     let totalWaitingTimeElement = document.getElementById('total-waiting-time');
 
+    let survivalRateElement = document.getElementById('stat-survival-rate')
+    let avgRaidTimeElement = document.getElementById('stat-avg-time');
+    let sessionEfficiencyElement = document.getElementById('stat-efficiency');
+
     loadSession();
 
     function saveSession() {
         localStorage.setItem('raidHistory', JSON.stringify(raids)); 
         localStorage.setItem('raidGameTime', JSON.stringify(totalGameTime));
-        localStorage.setItem('raidWaitingTime', JSON.stringify(totalWaitingTime));      
+        localStorage.setItem('raidWaitingTime', JSON.stringify(totalWaitingTime));
     }
 
     function loadSession() {
         const savedRaids = localStorage.getItem('raidHistory');
         raids = JSON.parse(savedRaids) || [];
         historyRaids(); 
+        updateStats();
 
         const savedGameTime = localStorage.getItem('raidGameTime');
         if (savedGameTime) {
@@ -142,6 +155,7 @@ document.addEventListener('DOMContentLoaded', e => {
 
         historyRaids();
         saveSession();
+        updateStats();
     }
 
     function saveRaidDetails(){
@@ -167,6 +181,7 @@ document.addEventListener('DOMContentLoaded', e => {
         localStorage.setItem('raidWaitingTime', 0);   
 
         saveSession();
+        updateStats();
     }
 
     function historyRaids(){
@@ -185,6 +200,36 @@ document.addEventListener('DOMContentLoaded', e => {
 
         historyListElement.innerHTML = '';
         raids = []; 
+    }
+
+
+    function updateStats(){
+
+        if (raids.length === 0) {
+            survivalRateElement.textContent = '0.0%';
+            avgRaidTimeElement.textContent = '00:00:00';
+            sessionEfficiencyElement.textContent = '0.0%';
+            return;
+        }
+        
+        if (raids.length > 0){
+            //survival rate
+            survivedRaids = raids.filter(raid => raid.survival === true)
+            survivalRate = (survivedRaids.length / raids.length) * 100;
+            survivalRateElement.textContent = `${survivalRate.toFixed(1)}%`;
+
+            //average raid time
+            totalRaidDuration += raids.reduce((acc, raid) => acc + raid.raidDuration, 0);
+            averageTime = totalRaidDuration / raids.length;
+            avgRaidTimeElement.textContent = formatTime(averageTime);
+
+            //session efficiency
+            totalSessionTime = totalGameTime + totalWaitingTime;
+            if (totalSessionTime > 0){
+                efficiency = (totalGameTime / totalSessionTime) * 100;
+                sessionEfficiencyElement.textContent = `${efficiency.toFixed(1)}%`;
+            }
+        }
     }
 
     startButton.addEventListener("click", startRaid);

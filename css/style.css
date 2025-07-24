@@ -139,3 +139,38 @@ li.dead {
     background-color: rgba(220, 53, 69, 0.1);
     border-left-color: #dc3545;
 }
+
+.report-container {
+    margin-top: 25px;
+    padding: 15px;
+    border: 1px solid #444;
+    border-radius: 5px;
+    width: 100%;
+    max-width: 400px;
+    
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.stats-grid {
+    display: flex;
+    justify-content: space-around;
+    text-align: center;
+    margin-top: 10px;
+}
+
+.stat-item {
+    display: flex;
+    flex-direction: column;
+}
+
+.stat-item label {
+    font-size: 0.8em;
+    color: #aaa;
+    margin-bottom: 5px;
+}
+
+.stat-item strong {
+    font-size: 1.4em;
+    color: #e0e0e0;
+}
