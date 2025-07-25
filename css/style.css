@@ -1,57 +1,118 @@
 body {
     background-color: #1a1a1a;
-    position: relative; 
-    
+    position: relative;
     color: #e0e0e0;
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 100vh;
     margin: 0;
+    min-height: 100vh;
 }
 
 body::before {
     content: '';
-    
     position: fixed;
     top: 0;
     left: 0;
     width: 100%;
     height: 100%;
-    
     background-image: url('/img/background.png');
     background-size: cover;
     background-repeat: no-repeat;
     background-position: center center;
-    background-attachment: fixed;
-
-    opacity: 0.3; 
-
+    opacity: 0.3;
     z-index: -1;
 }
 
 main {
+    width: 95%;
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 20px 0;
     text-align: center;
 }
 
-.timers {
-    display: flex;
-    justify-content: center;
-    align-items: center;
+ #log-raid-container, .history-container, .report-container {
+    margin-top: 0; 
+    padding: 15px;
+    border: 1px solid #444;
+    border-radius: 5px;
+    width: 100%;
+}
+
+
+.history-container, .report-container {
+    text-align: center; 
+}
+
+#history-raids-list li {
+    text-align: left;
+} 
+
+/* --- MAIN GRID STRUCTURE --- */
+
+.app-grid {
+    display: grid;
+    grid-template-columns: 1fr 2fr 1fr;
     gap: 40px;
-    margin: 30px 0;
+    align-items: start;
+    text-align: left;
+    margin-top: 20px;
+}
+
+.main-content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+/* Side Panels & Forms */
+.panel {
+    padding: 15px;
+    border: 1px solid #444;
+    border-radius: 5px;
+    width: 100%;
+    background-color: rgba(26, 26, 26, 0.7);
+}
+
+#log-raid-container,
+.report-container,
+.history-container {
+    text-align: center;
+}
+
+#log-raid-container {
+    max-width: 400px; /* Limita a largura máxima do formulário */
+}
+
+/* Timers */
+.timers {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 30px;
+    margin-bottom: 30px;
+    width: 100%;
+    max-width: 500px;
+}
+
+.timer-box {
+    text-align: center;
 }
 
 .timer-box h2 {
     font-size: 1.2em;
     color: #aaa;
+    margin: 0 0 5px 0;
 }
 
 .timer-box p {
     font-size: 2.5em;
     font-weight: bold;
     margin: 5px 0;
+}
+
+
+/* Buttons */
+.buttons {
+    margin-bottom: 25px;
 }
 
 button {
@@ -63,6 +124,7 @@ button {
     color: #e0e0e0;
     margin: 0 10px;
     transition: background-color 0.2s;
+    border-radius: 5px;
 }
 
 button:hover {
@@ -74,54 +136,45 @@ button.raid-active {
     border-color: #b82c2c;
 }
 
-/* Estilos para os novos elementos */
-
-.hidden {
-    display: none;
-}
-
-#log-raid-container, .history-container {
-    margin-top: 25px;
-    margin-left: auto;
-    margin-right: auto;
-
-    padding: 15px;
-    border: 1px solid #444;
-    border-radius: 5px;
-    width: 100%;
-    max-width: 400px; /* Impede que fique demasiado largo em ecrãs grandes */
-}
-
 .form-line {
     margin-bottom: 10px;
 }
 
-#log-raid-container textarea, #log-raid-container select {
+#log-raid-container textarea, 
+#log-raid-container select {
     width: 100%;
-    padding: 5px;
+    padding: 8px;
     background-color: #333;
     color: #e0e0e0;
     border: 1px solid #555;
+    border-radius: 4px;
 }
 
 #save-raid-btn {
-    width: 100%;
     padding: 10px;
     font-size: 1em;
-    margin: auto;
+    margin-top: 10px;
+}
+
+#raid-map {
+    width: 100%;
+    max-width: 300px;
+    margin: 0 auto;
+    display: block;
 }
 
 
 #history-raids-list {
     list-style: none;
     padding: 0;
+    margin-top: 15px;
 }
 
 #history-raids-list li {
     padding: 10px;
     margin-bottom: 10px;
-    border-left-width: 5px;
-    border-left-style: solid;
+    border-left: 5px solid;
+    text-align: left;
 }
 
 #history-raids-list li p {
@@ -140,21 +193,15 @@ li.dead {
     border-left-color: #dc3545;
 }
 
-.report-container {
-    margin-top: 25px;
-    padding: 15px;
-    border: 1px solid #444;
-    border-radius: 5px;
-    width: 100%;
-    max-width: 400px;
-    
-    margin-left: auto;
-    margin-right: auto;
-}
+
+
+/*Statistics Report*/
 
 .stats-grid {
     display: flex;
-    justify-content: space-around;
+    flex-direction: column; /* Alinha os itens verticalmente */
+    align-items: center; /* Centraliza os itens */
+    gap: 15px; /* Adiciona um espaço vertical entre os itens */
     text-align: center;
     margin-top: 10px;
 }
@@ -174,3 +221,21 @@ li.dead {
     font-size: 1.4em;
     color: #e0e0e0;
 }
+
+.hidden {
+    display: none;
+}
+
+/*
+.report-container {
+    margin-top: 25px;
+    padding: 15px;
+    border: 1px solid #444;
+    border-radius: 5px;
+    width: 100%;
+    max-width: 400px;
+    
+    margin-left: auto;
+    margin-right: auto;
+}
+*/

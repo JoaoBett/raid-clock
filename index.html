@@ -12,81 +12,89 @@
     <main>
         <h1>Raid Clock</h1>
 
-        <div class="timers">
-            <div class="timer-box">
-                <h2>Game Time</h2>
-                <p id="game-time">00:00:00</p>
-            </div>
-            <div class="timer-box">
-                <h2>Waiting Time</h2>
-                <p id="waiting-time">00:00:00</p>
-            </div>
-            <div class="timer-box">
-                <h2>Total Waiting Time</h2>
-                <p id="total-waiting-time">00:00:00</p>
-            </div>
-            <div class="timer-box">
-                <h2>Total Game Time</h2>
-                <p id="total-game-time">00:00:00</p>
-            </div>
-        </div>
-
-        <div class="buttons">
-            <button id="start-button" onclick="">Start Raid</button>
-            <button id="reset-button">Reset</button>
-        </div>
-
-        <div id="log-raid-container" class="hidden">
-            <h3>Last Raid Details</h3>
-            <div class="form-line">
-                <input type="checkbox" id="raid-survival">
-                <label for="raid-survival">Survived?</label>
-            </div>
-            <div class="form-line">
-                <label for="raid-map">Map:</label>
-                <select id="raid-map">
-                    <option value="Customs">Customs</option>
-                    <option value="Factory">Factory</option>
-                    <option value="Interchange">Interchange</option>
-                    <option value="Lighthouse">Lighthouse</option>
-                    <option value="Reserve">Reserve</option>
-                    <option value="Shoreline">Shoreline</option>
-                    <option value="Streets">Streets of Tarkov</option>
-                    <option value="Woods">Woods</option>
-                </select>
-            </div>
-            <div class="form-line">
-                <button id="save-raid-btn">Save Raid</button>
-            </div>
-        </div>
-
-        <div class="report-container">
-            <h3>Session Report</h3>
-            <div class="stats-grid">
-                <div class="stat-item">
-                    <label>Survival Rate</label>
-                    <strong id="stat-survival-rate">0.0%</strong>
+        <div class="app-grid">
+            <aside class="sidebar-left">
+                <div class="report-container panel">
+                    <h3>Session Report</h3>
+                    <div class="stats-grid">
+                        <div class="stat-item">
+                            <label>Survival Rate</label>
+                            <strong id="stat-survival-rate">0.0%</strong>
+                        </div>
+                        <div class="stat-item">
+                            <label>Average Raid Time</label>
+                            <strong id="stat-avg-time">00:00:00</strong>
+                        </div>
+                        <div class="stat-item">
+                            <label>Session Efficiency</label>
+                            <strong id="stat-efficiency">0.0%</strong>
+                        </div>
+                    </div>
                 </div>
-                <div class="stat-item">
-                    <label>Average Raid Time</label>
-                    <strong id="stat-avg-time">00:00:00</strong>
+            </aside>
+
+            <div class="main-content">
+                <div class="timers">
+                    <div class="timer-box">
+                        <h2>Game Time</h2>
+                        <p id="game-time">00:00:00</p>
+                    </div>
+                    <div class="timer-box">
+                        <h2>Waiting Time</h2>
+                        <p id="waiting-time">00:00:00</p>
+                    </div>
+                    <div class="timer-box">
+                        <h2>Total Game Time</h2>
+                        <p id="total-game-time">00:00:00</p>
+                    </div>
+                    <div class="timer-box">
+                        <h2>Total Waiting Time</h2>
+                        <p id="total-waiting-time">00:00:00</p>
+                    </div>
                 </div>
-                <div class="stat-item">
-                    <label>Session Efficiency</label>
-                    <strong id="stat-efficiency">0.0%</strong>
+
+                <div class="buttons">
+                    <button id="start-button">Start Raid</button>
+                    <button id="reset-button">Reset</button>
+                </div>
+
+                <div id="log-raid-container" class="hidden panel">
+                    <h3>Last Raid Details</h3>
+                    <div class="form-line">
+                        <input type="checkbox" id="raid-survival">
+                        <label for="raid-survival">Survived?</label>
+                    </div>
+                    <div class="form-line">
+                        <label for="raid-map">Map:</label>
+                        <select id="raid-map">
+                            <option value="Customs">Customs</option>
+                            <option value="Factory">Factory</option>
+                            <option value="Woods">Woods</option>
+                            <option value="Shoreline">Shoreline</option>
+                            <option value="Reserve">Reserve</option>
+                            <option value="Interchange">Interchange</option>
+                            <option value="Lighthouse">Lighthouse</option>
+                            <option value="Streets">Streets of Tarkov</option>
+                            <option value="Labs">Labs</option>
+                            <option value="Woods">Terminal</option>
+                        </select>
+                    </div>
+                    <div class="form-line">
+                        <button id="save-raid-btn">Save Raid</button>
+                    </div>
                 </div>
             </div>
+
+            <aside class="sidebar-right">
+                <div class="history-container panel">
+                    <h3>History of Raids</h3>
+                    <button class="reset-history-button">Reset History</button>
+                    <ul id="history-raids-list">
+                        </ul>
+                </div>
+            </aside>
+
         </div>
-
-
-        <div class="history-container">
-            <h3>History of Raids</h3>
-            <button class="reset-history-button">Reset History</button>
-            <ul id="history-raids-list">
-                </ul>
-        </div>
-
-
     </main>
 
     <script src="javascript/script.js"></script>
